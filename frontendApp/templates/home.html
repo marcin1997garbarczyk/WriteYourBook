@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %} Subscribers {% endblock %}
+{% load static %}
+<!--{% block scriptInjection %} <script src="{% static 'registerFormController.js' %}"></script> {% endblock %}-->
+
+
+{% block content %}
+<br/>
+<h1 class="fw-lighter">Write your own stories</h1>
+
+
+<div class="card"  id="formId">
+  <div class="card-body">
+    <form>
+        <div class="mb-3">
+            <label for="storyTypeInput" class="form-label fw-lighter">Type of your story</label>
+            <br/>
+            <select  class="selectpicker" id="storyTypeInput" data-width="100%" >
+                <option value="Fantasy">Fantasy</option>
+                <option value="Romance">Romance</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="genderCharacterInput" class="form-label fw-lighter">Type of your story</label>
+            <br/>
+            <select class="selectpicker" id="genderCharacterInput" data-width="100%" >
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="nameOfCharacter" class="form-label fw-lighter">Name of your character</label>
+            <input class="form-control" id="nameOfCharacter" aria-describedby="emailHelp" required>
+        </div>
+        <div class="mb-3">
+            <label for="inspirationForStory" class="form-label fw-lighter">Inspiration for your story</label>
+            <input class="form-control" id="inspirationForStory" aria-describedby="emailHelp" >
+        </div>
+        <div class="mb-3">
+            <label for="additionalPlotOutline" class="form-label fw-lighter">Additional plot outline</label>
+            <textarea class="form-control" id="additionalPlotOutline" rows="3"></textarea>
+        </div>
+        <div class="text-center">
+          <button id='buttonToSubmit' type="button" class="btn btn-secondary" onclick="submitForm()">Write my story!
+          </button>
+
+          <div class="d-flex justify-content-center" >
+              <div id='loaderInForm' class="spinner-border" role="status" style="display:none"></div>
+          </div>
+        </div>
+    </form>
+  </div>
+</div>
+<div id="infoAfterSave">
+  <h2 class="fw-lighter"></h2>
+</div>
+
+<script src="{% static 'homePageController.js' %}"></script>
+
+{% endblock %}
+
