@@ -22,6 +22,12 @@ body {
   animation: loading 1.2s infinite;
 }
 
+.decisionBlock {
+    display: flex;
+    flex-grow: inherit;
+    flex-direction: column;
+}
+
 .obj:nth-child(2){
   animation-delay: 0.15s;
 }

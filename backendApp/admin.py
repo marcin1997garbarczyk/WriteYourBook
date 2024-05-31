@@ -1,10 +1,14 @@
 from django.contrib import admin
 
-from backendApp.models import Story
+from backendApp.models import Story, StoryMessage
 
 
 # Register your models here.
 
 @admin.register(Story)
-class SubscriberAdmin(admin.ModelAdmin):
+class StoryAdmin(admin.ModelAdmin):
     list_display = ['pk', 'storyType', 'gender', 'characterName', 'inspiration', 'additionalPlotOutline', 'questionToChat']
+
+@admin.register(StoryMessage)
+class StoryMessageAdmin(admin.ModelAdmin):
+    list_display = ['pk', 'storyId', 'role', 'content']

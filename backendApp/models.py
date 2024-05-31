@@ -10,3 +10,7 @@ class Story(models.Model):
     additionalPlotOutline = models.CharField(max_length=5000, blank=True)
     questionToChat = models.CharField(max_length=5000, blank=True)
 
+class StoryMessage(models.Model):
+    storyId = models.CharField(max_length=200)
+    role = models.CharField(max_length=200)
+    content = models.CharField(max_length=500000)
