@@ -22,6 +22,9 @@ class StoryFormSerializer(serializers.ModelSerializer):
     def getQuestionToChat(self, obj):
         return obj.questionToChat
 
+    def getTitle(self, obj):
+        return obj.title
+
     class Meta:
         model = Story
-        fields = ['storyType', 'gender', 'characterName', 'inspiration', 'additionalPlotOutline', 'questionToChat']
+        fields = ['storyTitle', 'storyType', 'gender', 'characterName', 'inspiration', 'additionalPlotOutline', 'questionToChat']

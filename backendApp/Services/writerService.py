@@ -22,7 +22,8 @@ class WriterService:
                                f'Dodatkowe szczęgóły dotyczące opowiadania {obj.additionalPlotOutline}. ' \
                                f'Na końcu każdego rozdziału podawaj 3 opcje jakie mogę podjąć jako główny bohater i czekaj na mój wybór w odpowiedzi. ' \
                              f'Odpowiedź przygotuj w dwóch osobnych tagach w tagu <history> przygotuj treść opowiadania w formacie html, ale tutaj nie zamieszczaj jeszcze odpowiedzi' \
-                             f'a w tag <decisions> przygotuj liste odpowiedzi jakie może wybrać użytkownik aby kontynuować historie w formacie listy podzielonej przecinkami.' \
+                             f'a w tag <decisions> przygotuj liste odpowiedzi jakie może wybrać użytkownik aby kontynuować historie w formacie listy podzielonej średnikami.' \
+                             f'Tytuł opowiadania zapisz w tagu <title> i nie zamieszczaj go już w html w tagu <h1>, tam może być nazwa rozdziału, który będzie umieszczony w tagu <history>. ' \
                              f'Nie powtarzaj tych samych rozdziałów w odpowiedziach'
         print(f'OBJ QUESTION CHAT {obj.questionToChat}')
         obj.save()
@@ -35,3 +36,15 @@ class WriterService:
         obj.role = role
         obj.content = content
         obj.save()
+
+    def updateStoryTitle(self, storyModel, chatAnswer,  storyId):
+        titleStartIndex = chatAnswer.index('<title>')
+        titleEndIndex = chatAnswer.index('</title>')
+        title = '---'
+        if(titleStartIndex >-1 and titleEndIndex > -1):
+            title = chatAnswer[titleStartIndex + 7: titleEndIndex]
+        print(f'TITLE: {title}')
+        storyObj = storyModel.objects.get(pk=storyId)
+        storyObj.storyTitle = title
+        storyObj.save()
+

@@ -49,8 +49,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+   "whitenoise.middleware.WhiteNoiseMiddleware"
 ]
-
 ROOT_URLCONF = 'coreApp.urls'
 
 TEMPLATES = [
@@ -124,8 +124,12 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 import os
-STATIC_ROOT = os.path.dirname(__file__)+'/static/'
+# STATIC_ROOT = os.path.dirname(__file__)+'/static/'
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
 
 import mimetypes
 mimetypes.add_type("text/css", ".css", True)

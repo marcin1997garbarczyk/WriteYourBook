@@ -7,7 +7,7 @@ from backendApp.models import Story, StoryMessage
 
 @admin.register(Story)
 class StoryAdmin(admin.ModelAdmin):
-    list_display = ['pk', 'storyType', 'gender', 'characterName', 'inspiration', 'additionalPlotOutline', 'questionToChat']
+    list_display = ['pk','storyTitle', 'storyType', 'gender', 'characterName', 'inspiration', 'additionalPlotOutline', 'questionToChat']
 
 @admin.register(StoryMessage)
 class StoryMessageAdmin(admin.ModelAdmin):
