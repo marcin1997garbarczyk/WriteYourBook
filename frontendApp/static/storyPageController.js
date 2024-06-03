@@ -54,6 +54,7 @@ async function callToApi() {
                 injectHtmlWithAnswer(storyMessage.content);
                 if (index !== storyMessagesArray.length - 1){
                     disableAllButtons();
+                    hideNotSelectedButtons();
                 }
             } else if(storyMessage.role =='user') {
                 colorButtonForPreviousQuestions(storyMessage)
@@ -76,21 +77,39 @@ function disableAllButtons() {
         button.disabled = true;
     })
 }
+function hideNotSelectedButtons() {
+    document.querySelectorAll(':disabled').forEach(button => {
+        debugger
+        if(!button.classList.contains('selectedButton')) {
+            button.style.display = 'none'
+        }
+    })
+}
 
 function colorButtonForPreviousQuestions(storyMessage) {
     let selectedButton = querySelectorIncludesText('button', storyMessage.content);
-    selectedButton.style = 'background-color: #a75c5c'
+    selectedButton.classList.add('selectedButton');
+    selectedButton.style.display = 'block';
 }
 
 async function selectAnswerToWriter(event) {
     let textFromButton = event.currentTarget.textContent;
     let selectedButton = querySelectorIncludesText('button', textFromButton)
+    selectedButton.classList.add('selectedButton');
 
-    selectedButton.style = 'background-color: #a75c5c'
-
-    document.querySelectorAll('.buttonForDecision').forEach(button => {
+    document.querySelectorAll(':enabled').forEach(button => {
         button.disabled = true;
+        debugger;
+
+        if(!button.classList.contains('selectedButton')) {
+            button.classList.add('fade-out');
+            setTimeout(() => {button.style.display = 'none';}, 2000)
+        }
     })
+
+    setTimeout(() => {
+        window.scrollTo(0, document.body.scrollHeight);
+    }, 500);
     askObject = {'storyId': storyId, 'answer': textFromButton}
 
 
@@ -101,7 +120,9 @@ async function selectAnswerToWriter(event) {
     injectHtmlWithAnswer(htmlResponse)
 //    setTimeout(() => {debugger; hideLoader()}, 5000)
     hideLoader();
-    window.scrollTo(0, document.body.scrollHeight);
+    setTimeout(() => {
+        window.scrollTo(0, document.body.scrollHeight);
+    }, 500);
 }
 
 function showLoader() {
@@ -149,7 +170,7 @@ function injectHtmlWithAnswer(htmlResponse) {
         style = htmlResponse.substring(htmlResponse.indexOf('<style>'), htmlResponse.indexOf('</style>')+8);
     }
     let historyBlock = htmlResponse.substring(htmlResponse.indexOf('<history>')+9, htmlResponse.indexOf('</history>'))
-    let decisionBlockForHtml = '<div class="decisionBlock" style="display: flex;flex-grow: inherit;flex-direction: column;">';
+    let decisionBlockForHtml = '<div class="decisionBlock" style="display: flex;flex-grow: inherit;flex-direction: column; margin-top:20px">';
     let decisionBlock = htmlResponse.substring(htmlResponse.indexOf('<decisions>')+12, htmlResponse.indexOf('</decisions>'))
     let optionsForUser = decisionBlock.split(';')
     optionsForUser.forEach(option => {

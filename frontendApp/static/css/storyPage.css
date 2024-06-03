@@ -72,7 +72,6 @@ body {
     background-size: cover;
     background-position: center;
     opacity: 0;
-    transition: opacity 2s ease-in-out;
 }
 
 
@@ -103,13 +102,21 @@ body {
 }
 
 .fade-in {
-    opacity: 0.5;
+    opacity: 1;
 }
 .fade-in-container {
-    opacity: 0.9;
+    opacity: 1;
 }
 .fade-out {
-    opacity: 0;
+    opacity: 0!important;
 }
-
-
+.buttonForDecision {
+    transition: opacity 2s ease-in-out;
+}
+.selectedButton {
+    background-color: rgb(63 137 72)
+}
+.blindCard {
+    margin-bottom:20px;
+    opacity: 1; width:75vw; overflow: auto
+}

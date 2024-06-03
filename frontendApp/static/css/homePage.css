@@ -111,11 +111,18 @@ body {
 }
 
 .fade-in {
-    opacity: 0.5;
+    opacity: 0.9;
 }
 .fade-in-container {
-    opacity: 0.9;
+    opacity: 1;
 }
 .fade-out {
     opacity: 0;
+}
+
+.blindCard {
+    opacity: 1; width:75vw; overflow: auto
+}
+.selectedButton {
+    background-color: rgb(63 137 72) !important;
 }

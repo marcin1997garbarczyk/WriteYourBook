@@ -49,7 +49,7 @@ function buildBootstrapCard(story) {
     return `<div class="card" style="margin:10px; width:30%;" >
         <div class="card-body" >
             <div class="cardText" style=' height:17vh'>
-            <h5 class="card-title" style="text-align: center">Title: ${story.storyTitle}</h5>
+            <h5 class="card-title" style="text-align: center">${story.storyTitle}</h5>
             <h6 class="card-subtitle mb-2 text-muted" style="text-align: center">Type: ${story.storyType}</h6>
             <p class="card-text" style="text-align: center">Main character: ${story.characterName}</p>
             <p class="card-text" style="text-align: center">Inspiration: ${story.inspiration}</p>
