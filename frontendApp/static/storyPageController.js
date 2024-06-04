@@ -43,7 +43,6 @@ async function callToApi() {
     let mainStory = apiCallParsedResponse.mainStory[0];
   let titleStoryElement = document.querySelector('.titleStory')
   titleStoryElement.textContent = mainStory.storyTitle
-  debugger
     changeStoryType(mainStory.storyType)
     storyMessages.forEach( (storyMessage, index, storyMessagesArray) => {
         if(index == 0) {
@@ -79,7 +78,6 @@ function disableAllButtons() {
 }
 function hideNotSelectedButtons() {
     document.querySelectorAll(':disabled').forEach(button => {
-        debugger
         if(!button.classList.contains('selectedButton')) {
             button.style.display = 'none'
         }
@@ -99,7 +97,6 @@ async function selectAnswerToWriter(event) {
 
     document.querySelectorAll(':enabled').forEach(button => {
         button.disabled = true;
-        debugger;
 
         if(!button.classList.contains('selectedButton')) {
             button.classList.add('fade-out');
@@ -174,6 +171,9 @@ function injectHtmlWithAnswer(htmlResponse) {
     let decisionBlock = htmlResponse.substring(htmlResponse.indexOf('<decisions>')+12, htmlResponse.indexOf('</decisions>'))
     let optionsForUser = decisionBlock.split(';')
     optionsForUser.forEach(option => {
+        if(option.startsWith('\n')) {
+            option = option.replace('\n', '')
+        }
         if(option.charAt(0) == ' ') option = option.slice(1);
         if(option.charAt(1) == ' ') option = option.slice(1);
         let trimmedVersionOfOption = option.replaceAll('\n','').trim()

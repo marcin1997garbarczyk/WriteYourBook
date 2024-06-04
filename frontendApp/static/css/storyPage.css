@@ -119,5 +119,6 @@ body {
 }
 .blindCard {
     margin-bottom: 20px;
-    opacity: 1; width:75vw; overflow: auto
+    opacity: 1;
+    overflow: auto;
 }
