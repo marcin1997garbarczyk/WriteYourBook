@@ -7,6 +7,8 @@ from .Services.chatGptService import ChatGptService
 from .Services.writerService import WriterService
 from .models import Story, StoryMessage
 from .serializers import StoryFormSerializer
+from django.forms.models import model_to_dict
+from django.core.serializers import serialize
 
 writerService = WriterService()
 chatGptService = ChatGptService()
@@ -26,7 +28,7 @@ class SubmitStoryFormView(APIView):
                 writerService.saveStoryMessageToDb(StoryMessage, newStoryObj.pk, 'assistant', answerFromChat)
 
                 writerService.updateStoryTitle(Story, answerFromChat, newStoryObj.pk)
-
+                print('BACKEND ZRZUCA')
                 return Response({'storyId': newStoryObj.pk}, status=status.HTTP_201_CREATED, content_type='application/json')
             except(TypeError, ValueError, OverflowError, Story.DoesNotExist):
                 return Response({'message': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
@@ -42,20 +44,20 @@ class SubmitAnswerFromUserView(APIView):
         dataFromRequest = request.data
         print(f'data from request {dataFromRequest}')
 
-        try:
-            chatGptService.injectStoryOfTalkWithRobot(StoryMessage, dataFromRequest.get('storyId'))
-            writerService.saveStoryMessageToDb(StoryMessage, dataFromRequest.get('storyId'), 'user', dataFromRequest.get('answer'))
-            print('NIMA 1')
-            for message in chatGptService.chatMessages:
-                print(f' message from chat {message}')
-            print('NIMA 2')
-            answerFromChat = chatGptService.askQuestionToChatGpt(dataFromRequest.get('answer'))
-            writerService.saveStoryMessageToDb(StoryMessage, dataFromRequest.get('storyId'), 'assistant', answerFromChat)
-            print('Odpowiedz z chatu : '+answerFromChat)
-            return Response({'message': answerFromChat, 'storyId': dataFromRequest.get('storyId')}, status=status.HTTP_201_CREATED, content_type='application/json')
-        except(TypeError, ValueError, OverflowError, Story.DoesNotExist):
-            print('EXECPTION 1')
-            return Response({'message': 'Error Exist'}, status=status.HTTP_400_BAD_REQUEST)
+        # try:
+        chatGptService.injectStoryOfTalkWithRobot(StoryMessage, dataFromRequest.get('storyId'))
+        writerService.saveStoryMessageToDb(StoryMessage, dataFromRequest.get('storyId'), 'user', dataFromRequest.get('answer'))
+        print('NIMA 1')
+        for message in chatGptService.chatMessages:
+            print(f' message from chat {message}')
+        print('NIMA 2')
+        answerFromChat = chatGptService.askQuestionToChatGpt(dataFromRequest.get('answer'))
+        newStoryMessage = writerService.saveStoryMessageToDb(StoryMessage, dataFromRequest.get('storyId'), 'assistant', answerFromChat)
+        # print('Odpowiedz z chatu : '+newStoryMessage)
+        return Response({'message': model_to_dict(newStoryMessage), 'storyId': dataFromRequest.get('storyId')}, status=status.HTTP_201_CREATED, content_type='application/json')
+        # except(TypeError, ValueError, OverflowError, Story.DoesNotExist):
+        #     print('EXECPTION 1')
+        #     return Response({'message': 'Error Exist'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 

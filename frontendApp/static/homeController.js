@@ -105,6 +105,7 @@ async function callToApi() {
     formElement.style.display="none"
     let infoMessage = document.getElementById('infoAfterSave');
     let objToReturn = {'storyId': apiCallParsedResponse.storyId}
+    debugger;
     return objToReturn;
 }
 

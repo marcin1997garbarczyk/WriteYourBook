@@ -14,4 +14,8 @@ class Story(models.Model):
 class StoryMessage(models.Model):
     storyId = models.CharField(max_length=200)
     role = models.CharField(max_length=200)
-    content = models.CharField(max_length=500000)
+    content = models.CharField(max_length=5000000)
+    history = models.CharField(max_length=5000000, blank=True)
+    decisions = models.CharField(max_length=5000000, blank=True)
+    style = models.CharField(max_length=5000000, blank=True)
+

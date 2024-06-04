@@ -11,4 +11,4 @@ class StoryAdmin(admin.ModelAdmin):
 
 @admin.register(StoryMessage)
 class StoryMessageAdmin(admin.ModelAdmin):
-    list_display = ['pk', 'storyId', 'role', 'content']
+    list_display = ['pk', 'storyId', 'role', 'history', 'decisions', 'content', 'style']

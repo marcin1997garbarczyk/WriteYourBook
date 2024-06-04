@@ -35,16 +35,27 @@ class WriterService:
         obj.storyId = storyId
         obj.role = role
         obj.content = content
+        if(role=='assistant'):
+            obj.history = self.getTextFromTag(content, 'history')
+            obj.decisions = self.getTextFromTag(content, 'decisions')
+            print('KURDE BLASZKA 41')
+            obj.style = self.getTextFromTag(content, 'style')
+            print('KURDE BLASZKA 43')
         obj.save()
+        return obj
 
     def updateStoryTitle(self, storyModel, chatAnswer,  storyId):
-        titleStartIndex = chatAnswer.index('<title>')
-        titleEndIndex = chatAnswer.index('</title>')
-        title = '---'
-        if(titleStartIndex >-1 and titleEndIndex > -1):
-            title = chatAnswer[titleStartIndex + 7: titleEndIndex]
-        print(f'TITLE: {title}')
         storyObj = storyModel.objects.get(pk=storyId)
-        storyObj.storyTitle = title
+        storyObj.storyTitle = self.getTextFromTag(chatAnswer, 'title')
         storyObj.save()
 
+    def getTextFromTag(self, text, tag):
+        if(tag not in text):
+            return ''
+        else:
+            startTag = text.index(f'<{tag}>')
+            endTag = text.index(f'</{tag}>')
+            trimmedText = ''
+            if(startTag > -1 and endTag > -1):
+                trimmedText = text[(int(startTag) + int(len(tag)+2)): endTag]
+            return trimmedText

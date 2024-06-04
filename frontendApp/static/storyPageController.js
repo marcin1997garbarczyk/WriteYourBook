@@ -13,17 +13,6 @@ async function init() {
 
 }
 
-function injectHtmlWithAnswer(htmlResponse) {
-    let style  = htmlResponse.substring(htmlResponse.indexOf('<style>'), htmlResponse.indexOf('</style>')+8);
-
-    let displayForHtml = style+historyBlock+decisionBlockForHtml;
-    displayForHtml = displayForHtml.replaceAll(historyClass.innerHTML, '')
-
-    historyClass.innerHTML +=  style + displayForHtml;
-    historyClass.outerHtml += style + displayForHtml;
-    historyClass.html += style + displayForHtml;
-}
-
 
 async function callToApi() {
 
@@ -50,7 +39,7 @@ async function callToApi() {
         } else {
 
             if(storyMessage.role =='assistant') {
-                injectHtmlWithAnswer(storyMessage.content);
+                injectHtmlWithAnswer(storyMessage);
                 if (index !== storyMessagesArray.length - 1){
                     disableAllButtons();
                     hideNotSelectedButtons();
@@ -114,6 +103,7 @@ async function selectAnswerToWriter(event) {
     let htmlObject = await callToApiWithAnswer(askObject);
     let htmlResponse = htmlObject.message;
     storyId = htmlObject.storyId;
+    debugger;
     injectHtmlWithAnswer(htmlResponse)
 //    setTimeout(() => {debugger; hideLoader()}, 5000)
     hideLoader();
@@ -163,12 +153,13 @@ function injectHtmlWithAnswer(htmlResponse) {
     let historyClass = document.querySelector('.historyBody')
 
     let style  = '';
-    if(htmlResponse.indexOf('<style>') > 0) {
-        style = htmlResponse.substring(htmlResponse.indexOf('<style>'), htmlResponse.indexOf('</style>')+8);
+    if(htmlResponse.style) {
+        style = htmlResponse.style;
     }
-    let historyBlock = htmlResponse.substring(htmlResponse.indexOf('<history>')+9, htmlResponse.indexOf('</history>'))
+    debugger;
+    let historyBlock = htmlResponse.history;
     let decisionBlockForHtml = '<div class="decisionBlock" style="display: flex;flex-grow: inherit;flex-direction: column; margin-top:20px">';
-    let decisionBlock = htmlResponse.substring(htmlResponse.indexOf('<decisions>')+12, htmlResponse.indexOf('</decisions>'))
+    let decisionBlock = htmlResponse.decisions
     let optionsForUser = decisionBlock.split(';')
     optionsForUser.forEach(option => {
         if(option.startsWith('\n')) {
