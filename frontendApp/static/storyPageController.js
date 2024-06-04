@@ -175,9 +175,12 @@ function injectHtmlWithAnswer(htmlResponse) {
     let optionsForUser = decisionBlock.split(';')
     optionsForUser.forEach(option => {
         if(option.charAt(0) == ' ') option = option.slice(1);
+        if(option.charAt(1) == ' ') option = option.slice(1);
         let trimmedVersionOfOption = option.replaceAll('\n','').trim()
+            debugger;
         if(trimmedVersionOfOption) {
             option = option.charAt(0).toUpperCase() + option.slice(1);
+            debugger;
             let idForButton = option.replaceAll(' ', '_');
             let newButton = `<button class="btn btn-secondary buttonForDecision" id=${idForButton} onclick="selectAnswerToWriter(event)">${option}</button>&nbsp;`;
             decisionBlockForHtml+=newButton;

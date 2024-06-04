@@ -72,6 +72,7 @@ body {
     background-size: cover;
     background-position: center;
     opacity: 0;
+    transition: opacity 2s ease-in-out;
 }
 
 
@@ -117,6 +118,6 @@ body {
     background-color: rgb(63 137 72)
 }
 .blindCard {
-    margin-bottom:20px;
+    margin-bottom: 20px;
     opacity: 1; width:75vw; overflow: auto
 }
