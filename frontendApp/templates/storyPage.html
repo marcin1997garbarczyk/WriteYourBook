@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %} Subscribers {% endblock %}
+{% load static %}
+<!--{% block scriptInjection %} <script src="{% static 'registerFormController.js' %}"></script> {% endblock %}-->
+
+
+{% block content %}
+<!--<link rel="stylesheet" href="{{STATIC_URL}}/static/css/storyPage.css">-->
+<link rel="stylesheet" href="{% static '/css/storyPage.css' %}">
+<br/>
+    <div class="card blindCard"  >
+      <div class="card-body customCard">
+        <div class="historyBody">
+    <blockquote class="blockquote text-center">
+      <p class="mb-0 titleStory" style="opacity: 0.8"></p>
+    </blockquote>
+        </div>
+            <div class="loader" style="margin-left:33%; display: none">
+                <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+                <dotlottie-player src="https://lottie.host/b3270445-6428-4b0a-ab2d-90a096aa4336/ERcvP0bUnc.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player>
+            </div>
+      </div>
+    </div>
+<script src="{% static '/storyPageController.js' %}"></script>
+
+{% endblock %}
+

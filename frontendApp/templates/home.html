@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block title %} Subscribers {% endblock %}
+{% load static %}
+<!--{% block scriptInjection %} <script src="{% static 'registerFormController.js' %}"></script> {% endblock %}-->
+
+
+{% block content %}
+<link rel="stylesheet" href="static/css/homePage.css">
+<br/>
+
+
+<div class="card blindCard" >
+  <div class="card-body customCard">
+    <form id="formId" class="formClass" >
+        <div class="mb-3">
+            <label for="storyTypeInput" class="form-label fw-lighter">Type of your story</label>
+            <br/>
+            <select  class="selectpicker" id="storyTypeInput" data-width="100%" onchange="changeStoryType()">
+                <option value="None"> </option>
+                <option value="fantasy">Fantasy</option>
+                <option value="romance">Romance</option>
+                <option value="criminal">Criminal</option>
+                <option value="drama">Drama</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="genderCharacterInput" class="form-label fw-lighter">Gender of your character</label>
+            <br/>
+            <select class="selectpicker" id="genderCharacterInput" data-width="100%" >
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="nameOfCharacter" class="form-label fw-lighter">Name of your character</label>
+            <input class="form-control" id="nameOfCharacter" aria-describedby="emailHelp" required>
+        </div>
+        <div class="mb-3">
+            <label for="inspirationForStory" class="form-label fw-lighter">Inspiration for your story</label>
+            <input class="form-control" id="inspirationForStory" aria-describedby="emailHelp" >
+        </div>
+        <div class="mb-3">
+            <label for="additionalPlotOutline" class="form-label fw-lighter">Additional plot outline</label>
+            <textarea class="form-control" id="additionalPlotOutline" rows="3"></textarea>
+        </div>
+        <div class="text-center">
+          <button id='buttonToSubmit' type="button" class="btn btn-secondary" onclick="submitForm()">Write my story!
+          </button>
+
+<!--          <div class="d-flex justify-content-center" >-->
+<!--              <div id='loaderInForm' class="spinner-border" role="status" style="display:none"></div>-->
+<!--          </div>-->
+        </div>
+    </form>
+    <div class="historyBody">
+<!--        <p class="typewriter" style="opacity:1">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>-->
+    </div>
+    <div style="display: none!important" class="loader d-flex justify-content-center" >
+
+        <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+        <dotlottie-player src="https://lottie.host/b3270445-6428-4b0a-ab2d-90a096aa4336/ERcvP0bUnc.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player>
+    </div>
+  </div>
+</div>
+<div id="infoAfterSave">
+  <h2 class="fw-lighter"></h2>
+</div>
+
+<script src="{% static 'homeController.js' %}"></script>
+
+{% endblock %}
+
