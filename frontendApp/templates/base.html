@@ -49,9 +49,28 @@
                 <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5z"/>
               </svg>
             </a>
-
           </li>
         </ul>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+
+        <ul class="navbar-nav">
+
+        {% if user.is_authenticated == False %}
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/login">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/register">Register</a>
+          </li>
+         {% endif %}
+
+        {% if user.is_authenticated == True %}
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
+         {% endif %}
+        </ul>
+      </div>
       </div>
     </nav>
     <div class="container">{% block content %} {% endblock %}</div>
