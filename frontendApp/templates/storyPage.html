@@ -19,6 +19,30 @@
                 <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
                 <dotlottie-player src="https://lottie.host/b3270445-6428-4b0a-ab2d-90a096aa4336/ERcvP0bUnc.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player>
             </div>
+
+        <div  class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Missing coins</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="missingMoney" style="opacity:0.8">
+                    <div class="text-center">
+                        <img src="/static/images/money_image.png" style="width:25%; height:25%; opacity:0.8" alt="Garnek złota"/>
+                        <br/>Please first get some coins to continue story!
+                    </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Confirm!</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
       </div>
     </div>
 <script src="{% static '/storyPageController.js' %}"></script>

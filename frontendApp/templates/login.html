@@ -3,6 +3,8 @@
 {% load static %}
 {% block content %}
 
+<link rel="stylesheet" href="{% static '/css/formStyle.css' %}">
+<br/>
 <h1>Login</h1>
 <div class="card blindCard" >
   <div class="card-body customCard">
@@ -26,6 +28,16 @@
                 {% endif %}
             </p>
         {% endfor %}
+
+        {% if messages %}
+        <div class="text-center">
+            <ul class="messages" style="list-style-type: none">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
         <div class="text-center">
           <button type="submit" class="btn btn-secondary">Login!</button>
 <!--          <button type="submit" class="btn btn-secondary">Login</button>-->

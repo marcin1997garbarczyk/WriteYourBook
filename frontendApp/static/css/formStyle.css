@@ -1,0 +1,10 @@
+.error {
+    color: #b84848;
+}
+.errorlist {
+    color: #b84848;
+    list-style-type: none;
+}
+.success {
+    color: #276827;
+}

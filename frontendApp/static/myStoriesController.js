@@ -2,6 +2,7 @@
 async function init() {
     console.log('@@@')
     await callToApi();
+    await getBalanceOfCurrentUser();
 }
 
 function injectHtmlWithAnswer(htmlResponse) {
@@ -78,6 +79,21 @@ function getCookie(name) {
         }
     }
     return cookieValue;
+}
+
+async function getBalanceOfCurrentUser() {
+    let apiCallResponse = await fetch("/api/get_balance", {
+          method: "GET",
+            credentials: "same-origin",
+            headers: {
+              "X-CSRFToken": getCookie("csrftoken"),
+              "Accept": "application/json",
+              'Content-Type': 'application/json'
+            },
+        })
+
+    let apiCallParsedResponse = await apiCallResponse.json();
+    document.querySelector('#balance_value').textContent = apiCallParsedResponse.userWalletBalance;
 }
 
 let alreadyInited = false;

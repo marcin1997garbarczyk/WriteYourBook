@@ -41,25 +41,30 @@ async function changeStoryType() {
 }
 
 async function submitForm() {
-//    let spinnerElement = document.getElementById('loaderInForm')
-    let buttonElement = document.getElementById('buttonToSubmit')
-    buttonElement.style.display = 'none'
-//    spinnerElement.style.display = 'block'
+    let currentBalance = await getBalanceOfCurrentUser()
+    if(currentBalance > 0) {
+        let buttonElement = document.getElementById('buttonToSubmit')
+        buttonElement.style.display = 'none'
 
-    let formClass = document.querySelector('.formClass')
+        let formClass = document.querySelector('.formClass')
 
-    let historyClass = document.querySelector('.historyBody')
-    formClass.classList.add('fade-out');
-    setTimeout(()=> {
-        formClass.style.display = 'none';
-        historyClass.style.display = 'block';
-        showLoader();
-    },2000)
-    let htmlObject = await callToApi();
-    storyId = htmlObject.storyId;
-    hideLoader()
+        let historyClass = document.querySelector('.historyBody')
+        formClass.classList.add('fade-out');
+        setTimeout(()=> {
+            formClass.style.display = 'none';
+            historyClass.style.display = 'block';
+            showLoader();
+        },2000)
+        let htmlObject = await callToApi();
+        storyId = htmlObject.storyId;
+        await getBalanceOfCurrentUser()
+        hideLoader()
+        window.location.href=`/story/${storyId}`
+    } else {
+        $('#myModal').modal('toggle');
+        $('#myModal').modal('show');
+    }
 
-    window.location.href=`/story/${storyId}`
 }
 
 function showLoader() {
@@ -109,6 +114,23 @@ async function callToApi() {
     return objToReturn;
 }
 
+
+async function getBalanceOfCurrentUser() {
+    let apiCallResponse = await fetch("/api/get_balance", {
+          method: "GET",
+            credentials: "same-origin",
+            headers: {
+              "X-CSRFToken": getCookie("csrftoken"),
+              "Accept": "application/json",
+              'Content-Type': 'application/json'
+            },
+        })
+
+    let apiCallParsedResponse = await apiCallResponse.json();
+    document.querySelector('#balance_value').textContent = apiCallParsedResponse.userWalletBalance;
+    return apiCallParsedResponse.userWalletBalance;
+}
+
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -125,10 +147,15 @@ function getCookie(name) {
     return cookieValue;
 }
 
-//let alreadyInited = false;
-//if(!alreadyInited) {
-//    alreadyInited = init();
-//}
+async function init() {
+    await getBalanceOfCurrentUser();
+    return true
+}
+
+let alreadyInited = false;
+if(!alreadyInited) {
+    alreadyInited = init();
+}
 
 
 

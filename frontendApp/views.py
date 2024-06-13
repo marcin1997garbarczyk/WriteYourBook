@@ -2,7 +2,9 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 from .forms import SignupForm, LoginForm
+from backendApp.models import UserWallet
 
 # Create your views here.
 @login_required(login_url='login')
@@ -20,7 +22,13 @@ def user_register(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
-            form.save()
+            obj = form.save()
+            print(obj)
+            userWallet = UserWallet()
+            userWallet.ownerId = obj.pk
+            userWallet.balance = 0
+            userWallet.save()
+            messages.success(request, 'User created successfully!')
             return redirect('login')
     else:
         form = SignupForm()
@@ -36,6 +44,8 @@ def user_login(request):
             if user:
                 login(request, user)
                 return redirect('home')
+            else:
+                messages.error(request, "Username or password is incorrect. Try again!")
     else:
         form = LoginForm()
     return render(request, 'login.html', {'form': form})

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from backendApp.models import Story, StoryMessage
+from backendApp.models import Story, StoryMessage, UserWallet
 
 
 # Register your models here.
@@ -12,3 +12,7 @@ class StoryAdmin(admin.ModelAdmin):
 @admin.register(StoryMessage)
 class StoryMessageAdmin(admin.ModelAdmin):
     list_display = ['pk', 'storyId', 'role', 'history', 'decisions', 'content', 'style']
+
+@admin.register(UserWallet)
+class UserWalletAdmin(admin.ModelAdmin):
+    list_display = ['pk', 'ownerId', 'balance']

@@ -46,11 +46,28 @@
         </div>
         <div class="text-center">
           <button id='buttonToSubmit' type="button" class="btn btn-secondary" onclick="submitForm()">Write my story!
-          </button>
-
-<!--          <div class="d-flex justify-content-center" >-->
-<!--              <div id='loaderInForm' class="spinner-border" role="status" style="display:none"></div>-->
-<!--          </div>-->
+        </button>
+            <div  class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Missing coins</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="missingMoney fade-out" style="opacity:0.8">
+                        <div class="text-center">
+                            <img src="/static/images/money_image.png" style="width:25%; height:25%; opacity:0.8"/>
+                            <br/>Please first get some coins to continue story!
+                        </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Confirm!</button>
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
     </form>
     <div class="historyBody">

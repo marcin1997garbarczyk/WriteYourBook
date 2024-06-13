@@ -3,9 +3,11 @@
 {% load static %}
 {% block content %}
 
-<h1>Signup</h1>
+<link rel="stylesheet" href="{% static '/css/formStyle.css' %}">
 <!--    {{ form.as_p }}-->
-
+<br/>
+<br/>
+<br/>
 <div class="card blindCard" >
   <div class="card-body customCard">
     <form method="POST" class="form">
@@ -28,6 +30,14 @@
                 {% endif %}
             </p>
         {% endfor %}
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
         <div class="text-center">
           <button type="submit" class="btn btn-secondary">Create new user!</button>
             <a href="/login" class="btn btn-secondary">Go to login page!</a>

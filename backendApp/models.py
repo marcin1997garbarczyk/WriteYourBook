@@ -19,3 +19,7 @@ class StoryMessage(models.Model):
     decisions = models.CharField(max_length=5000000, blank=True)
     style = models.CharField(max_length=5000000, blank=True)
 
+
+class UserWallet(models.Model):
+    ownerId = models.CharField(max_length=200)
+    balance = models.DecimalField(max_digits=8, decimal_places=0)

@@ -6,16 +6,15 @@ async function init() {
     let historyClass = document.querySelector('.historyBody')
     historyClass.style.display = 'block'
     await callToApi();
+    await getBalanceOfCurrentUser();
     setTimeout(() => {
         historyClass.classList.add('fade-in-container')
         window.scrollTo(0, document.body.scrollHeight);
     }, 500)
-
 }
 
 
 async function callToApi() {
-
     let apiCallResponse = await fetch(`/api/get_story_details/${storyId}`, {
           method: "GET",
         credentials: "same-origin",
@@ -80,36 +79,41 @@ function colorButtonForPreviousQuestions(storyMessage) {
 }
 
 async function selectAnswerToWriter(event) {
-    let textFromButton = event.currentTarget.textContent;
-    let selectedButton = querySelectorIncludesText('button', textFromButton)
-    selectedButton.classList.add('selectedButton');
+    currentBalance = await getBalanceOfCurrentUser()
+    if(currentBalance > 0) {
+    debugger
+        let textFromButton = event.target.textContent;
+        let selectedButton = querySelectorIncludesText('button', textFromButton)
+        selectedButton.classList.add('selectedButton');
 
-    document.querySelectorAll(':enabled').forEach(button => {
-        button.disabled = true;
+        document.querySelectorAll(':enabled').forEach(button => {
+            button.disabled = true;
 
-        if(!button.classList.contains('selectedButton')) {
-            button.classList.add('fade-out');
-            setTimeout(() => {button.style.display = 'none';}, 2000)
-        }
-    })
+            if(!button.classList.contains('selectedButton')) {
+                button.classList.add('fade-out');
+                setTimeout(() => {button.style.display = 'none';}, 2000)
+            }
+        })
 
-    setTimeout(() => {
-        window.scrollTo(0, document.body.scrollHeight);
-    }, 500);
-    askObject = {'storyId': storyId, 'answer': textFromButton}
-
-
-    showLoader();
-    let htmlObject = await callToApiWithAnswer(askObject);
-    let htmlResponse = htmlObject.message;
-    storyId = htmlObject.storyId;
-    debugger;
-    injectHtmlWithAnswer(htmlResponse)
-//    setTimeout(() => {debugger; hideLoader()}, 5000)
-    hideLoader();
-    setTimeout(() => {
-        window.scrollTo(0, document.body.scrollHeight);
-    }, 500);
+        setTimeout(() => {
+            window.scrollTo(0, document.body.scrollHeight);
+        }, 500);
+        askObject = {'storyId': storyId, 'answer': textFromButton}
+        showLoader();
+        let htmlObject = await callToApiWithAnswer(askObject);
+        let htmlResponse = htmlObject.message;
+        storyId = htmlObject.storyId;
+        debugger;
+        injectHtmlWithAnswer(htmlResponse)
+        await getBalanceOfCurrentUser()
+        hideLoader();
+        setTimeout(() => {
+            window.scrollTo(0, document.body.scrollHeight);
+        }, 500);
+    } else {
+        $('#myModal').modal('toggle');
+        $('#myModal').modal('show');
+    }
 }
 
 function showLoader() {
@@ -156,7 +160,6 @@ function injectHtmlWithAnswer(htmlResponse) {
     if(htmlResponse.style) {
         style = htmlResponse.style;
     }
-    debugger;
     let historyBlock = htmlResponse.history;
     let decisionBlockForHtml = '<div class="decisionBlock" style="display: flex;flex-grow: inherit;flex-direction: column; margin-top:20px">';
     let decisionBlock = htmlResponse.decisions
@@ -168,10 +171,8 @@ function injectHtmlWithAnswer(htmlResponse) {
         if(option.charAt(0) == ' ') option = option.slice(1);
         if(option.charAt(1) == ' ') option = option.slice(1);
         let trimmedVersionOfOption = option.replaceAll('\n','').trim()
-            debugger;
         if(trimmedVersionOfOption) {
             option = option.charAt(0).toUpperCase() + option.slice(1);
-            debugger;
             let idForButton = option.replaceAll(' ', '_');
             let newButton = `<button class="btn btn-secondary buttonForDecision" id=${idForButton} onclick="selectAnswerToWriter(event)">${option}</button>&nbsp;`;
             decisionBlockForHtml+=newButton;
@@ -258,6 +259,22 @@ function getCookie(name) {
         }
     }
     return cookieValue;
+}
+
+async function getBalanceOfCurrentUser() {
+    let apiCallResponse = await fetch("/api/get_balance", {
+          method: "GET",
+            credentials: "same-origin",
+            headers: {
+              "X-CSRFToken": getCookie("csrftoken"),
+              "Accept": "application/json",
+              'Content-Type': 'application/json'
+            },
+        })
+
+    let apiCallParsedResponse = await apiCallResponse.json();
+    document.querySelector('#balance_value').textContent = apiCallParsedResponse.userWalletBalance;
+    return apiCallParsedResponse.userWalletBalance;
 }
 
 let alreadyInited = false;
