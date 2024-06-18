@@ -27,6 +27,6 @@ class WalletService:
     def create_new_wallet(self, userId):
         userWallet = UserWallet()
         userWallet.ownerId = userId
-        userWallet.balance = 0
+        userWallet.balance = 10
         userWallet.save()
         return userWallet
