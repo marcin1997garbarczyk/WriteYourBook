@@ -5,20 +5,20 @@ class WalletService:
     def __init__(self):
         pass
 
-    def get_current_wallet_for_user_id(self, userWalletModel, userId):
-        userWallet = userWalletModel.objects.get(ownerId=userId)
+    def get_current_wallet_for_user_id(self, userId):
+        userWallet = UserWallet.objects.get(ownerId=userId)
         if not userWallet:
             userWallet = self.create_new_wallet(userId)
         return userWallet
 
-    def reduceCoinInCurrentWallet(self, userWalletModel, userId):
-        userWallet = self.get_current_wallet_for_user_id(userWalletModel, userId)
+    def reduceCoinInCurrentWallet(self, userId):
+        userWallet = self.get_current_wallet_for_user_id(userId)
         currentBalance = userWallet.balance
         userWallet.balance = currentBalance - 1
         userWallet.save()
 
-    def checkBalanceOnCurrentWallet(self, userWalletModel, userId):
-        userWallet = self.get_current_wallet_for_user_id(userWalletModel, userId)
+    def checkBalanceOnCurrentWallet(self, userId):
+        userWallet = self.get_current_wallet_for_user_id(userId)
         if userWallet.balance > 0:
             return True
         else:

@@ -10,6 +10,7 @@ class Story(models.Model):
     inspiration = models.CharField(max_length=200, blank=True)
     additionalPlotOutline = models.CharField(max_length=5000, blank=True)
     questionToChat = models.CharField(max_length=5000, blank=True)
+    ownerId = models.CharField(max_length=200)
 
 class StoryMessage(models.Model):
     storyId = models.CharField(max_length=200)
