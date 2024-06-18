@@ -27,19 +27,14 @@ class SubmitStoryFormView(APIView):
                 try:
                     newStoryObj = writerService.startYourOwnStory(Story, serializer)
                     writerService.saveStoryMessageToDb(StoryMessage, newStoryObj.pk, 'user', newStoryObj.questionToChat)
-
                     answerFromChat = chatGptService.askQuestionToChatGpt(newStoryObj.questionToChat)
-
-
                     writerService.saveStoryMessageToDb(StoryMessage, newStoryObj.pk, 'assistant', answerFromChat)
-
                     writerService.updateStoryTitle(Story, answerFromChat, newStoryObj.pk)
                     walletService.reduceCoinInCurrentWallet(UserWallet, request.user.id)
                     return Response({'storyId': newStoryObj.pk}, status=status.HTTP_201_CREATED, content_type='application/json')
                 except(TypeError, ValueError, OverflowError, Story.DoesNotExist):
                     return Response({'message': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
             else:
-                print('EXECPTION')
                 return Response({'message': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 

@@ -1,3 +1,6 @@
+from backendApp.models import UserWallet
+
+
 class WalletService:
     def __init__(self):
         pass

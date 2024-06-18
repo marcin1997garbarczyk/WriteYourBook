@@ -3,10 +3,12 @@ from django.shortcuts import render, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .forms import SignupForm, LoginForm
-from backendApp.models import UserWallet
 
-# Create your views here.
+from backendApp.Services.walletService import WalletService
+from .forms import SignupForm, LoginForm
+
+
+walletService = WalletService()
 @login_required(login_url='login')
 def home(request):
     return render(request, 'home.html')
@@ -23,11 +25,7 @@ def user_register(request):
         form = SignupForm(request.POST)
         if form.is_valid():
             obj = form.save()
-            print(obj)
-            userWallet = UserWallet()
-            userWallet.ownerId = obj.pk
-            userWallet.balance = 0
-            userWallet.save()
+            walletService.create_new_wallet(obj.pk)
             messages.success(request, 'User created successfully!')
             return redirect('login')
     else:
@@ -49,6 +47,7 @@ def user_login(request):
     else:
         form = LoginForm()
     return render(request, 'login.html', {'form': form})
+
 def user_logout(request):
     logout(request)
     return redirect('login')

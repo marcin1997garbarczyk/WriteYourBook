@@ -1,4 +1,3 @@
-
 let storyId = 0;
 
 async function cleanBackgroundImage() {
@@ -21,7 +20,7 @@ async function changeBackground(imageUrl) {
             backgroundContainer.classList.remove('fade-out');
             backgroundContainer.classList.add('fade-in');
         }, 10);
-    },1000);
+    }, 1000);
 }
 
 async function resetBackground() {
@@ -33,7 +32,7 @@ async function resetBackground() {
 }
 
 async function changeStoryType() {
-    let storyType =  $('#storyTypeInput').val();
+    let storyType = $('#storyTypeInput').val();
     let imageUrl = 'basic';
     imageUrl = `"/static/images/background_${storyType}.png"`;
 
@@ -42,7 +41,7 @@ async function changeStoryType() {
 
 async function submitForm() {
     let currentBalance = await getBalanceOfCurrentUser()
-    if(currentBalance > 0) {
+    if (currentBalance > 0) {
         let buttonElement = document.getElementById('buttonToSubmit')
         buttonElement.style.display = 'none'
 
@@ -50,16 +49,16 @@ async function submitForm() {
 
         let historyClass = document.querySelector('.historyBody')
         formClass.classList.add('fade-out');
-        setTimeout(()=> {
+        setTimeout(() => {
             formClass.style.display = 'none';
             historyClass.style.display = 'block';
             showLoader();
-        },2000)
+        }, 2000)
         let htmlObject = await callToApi();
         storyId = htmlObject.storyId;
         await getBalanceOfCurrentUser()
         hideLoader()
-        window.location.href=`/story/${storyId}`
+        window.location.href = `/story/${storyId}`
     } else {
         $('#myModal').modal('toggle');
         $('#myModal').modal('show');
@@ -78,7 +77,9 @@ function hideLoader() {
 }
 
 async function getMockForHttp() {
-    let objToReturn = {'storyId': 31}
+    let objToReturn = {
+        'storyId': 31
+    }
     await new Promise(r => setTimeout(r, 2000));
 
     return objToReturn;
@@ -94,37 +95,38 @@ async function callToApi() {
     }
 
     let apiCallResponse = await fetch("/api/submit_story_form", {
-          method: "POST",
-          body: JSON.stringify(storySummary),
-            credentials: "same-origin",
-            headers: {
-              "X-CSRFToken": getCookie("csrftoken"),
-              "Accept": "application/json",
-              'Content-Type': 'application/json'
-            },
-        })
+        method: "POST",
+        body: JSON.stringify(storySummary),
+        credentials: "same-origin",
+        headers: {
+            "X-CSRFToken": getCookie("csrftoken"),
+            "Accept": "application/json",
+            'Content-Type': 'application/json'
+        },
+    })
 
     let apiCallParsedResponse = await apiCallResponse.json();
 
     let formElement = document.querySelector('.formClass');
-    formElement.style.display="none"
+    formElement.style.display = "none"
     let infoMessage = document.getElementById('infoAfterSave');
-    let objToReturn = {'storyId': apiCallParsedResponse.storyId}
-    debugger;
+    let objToReturn = {
+        'storyId': apiCallParsedResponse.storyId
+    }
     return objToReturn;
 }
 
 
 async function getBalanceOfCurrentUser() {
     let apiCallResponse = await fetch("/api/get_balance", {
-          method: "GET",
-            credentials: "same-origin",
-            headers: {
-              "X-CSRFToken": getCookie("csrftoken"),
-              "Accept": "application/json",
-              'Content-Type': 'application/json'
-            },
-        })
+        method: "GET",
+        credentials: "same-origin",
+        headers: {
+            "X-CSRFToken": getCookie("csrftoken"),
+            "Accept": "application/json",
+            'Content-Type': 'application/json'
+        },
+    })
 
     let apiCallParsedResponse = await apiCallResponse.json();
     document.querySelector('#balance_value').textContent = apiCallParsedResponse.userWalletBalance;
@@ -137,7 +139,6 @@ function getCookie(name) {
         var cookies = document.cookie.split(';');
         for (var i = 0; i < cookies.length; i++) {
             var cookie = jQuery.trim(cookies[i]);
-            // Does this cookie string begin with the name we want?
             if (cookie.substring(0, name.length + 1) === (name + '=')) {
                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                 break;
@@ -153,11 +154,6 @@ async function init() {
 }
 
 let alreadyInited = false;
-if(!alreadyInited) {
+if (!alreadyInited) {
     alreadyInited = init();
 }
-
-
-
-
-
