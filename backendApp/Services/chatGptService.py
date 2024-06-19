@@ -1,11 +1,16 @@
 from openai import OpenAI
 import config
+import os
 from backendApp.models import StoryMessage
 
 
 class ChatGptService:
     def __init__(self):
-        API_KEY_OPEN_AI = config.CHAT_GPT_API_KEY
+        if(os.environ.get('CHAT_GPT_API_KEY') is not None):
+            API_KEY_OPEN_AI = os.environ.get('CHAT_GPT_API_KEY')
+        else:
+            API_KEY_OPEN_AI = config.CHAT_GPT_API_KEY
+
         self.client = OpenAI(
             api_key=API_KEY_OPEN_AI
         )
