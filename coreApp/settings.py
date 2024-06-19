@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-4u8n)@5x3eh%8yboqu!hqscjuv#k7(@#7^!5(8jay()ee02ziz
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['writeyourbook.onrender.com', '127.0.0.1']
 
 
 # Application definition
@@ -133,3 +133,4 @@ STATICFILES_DIRS = [
 
 import mimetypes
 mimetypes.add_type("text/css", ".css", True)
+
