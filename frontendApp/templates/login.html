@@ -2,11 +2,11 @@
 {% block title %} OwnStory {% endblock %}
 {% load static %}
 {% block content %}
-
 <link rel="stylesheet" href="{% static '/css/formStyle.css' %}">
+<div class="containerForBody">
 <br />
 <h1>Login</h1>
-<div class="card blindCard">
+<div class="card blindCard shadow p-3 mb-5 bg-white rounded">
     <div class="card-body customCard">
         <form method="POST" class="form">
             {% csrf_token %}
@@ -45,6 +45,7 @@
             </div>
         </form>
     </div>
+</div>
 </div>
 <!--</form>-->
 

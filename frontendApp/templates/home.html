@@ -9,14 +9,14 @@
 <br />
 
 
-<div class="card blindCard">
+<div class="card blindCard shadow p-3 mb-5 bg-white rounded">
   <div class="card-body customCard">
     <form id="formId" class="formClass">
       <div class="mb-3">
         <label for="storyTypeInput" class="form-label fw-lighter">Type of your story</label>
         <br />
         <select class="selectpicker" id="storyTypeInput" data-width="100%" onchange="changeStoryType()">
-          <option value="None"> </option>
+          <option value="none"> </option>
           <option value="fantasy">Fantasy</option>
           <option value="fairytale">Fairy tale</option>
           <option value="romance">Romance</option>
@@ -30,6 +30,14 @@
         <select class="selectpicker" id="genderCharacterInput" data-width="100%">
           <option value="Male">Male</option>
           <option value="Female">Female</option>
+        </select>
+      </div>
+            <div class="mb-3">
+        <label for="genderCharacterInput" class="form-label fw-lighter">Language for your story</label>
+        <br />
+        <select class="selectpicker" id="languageInput" data-width="100%">
+          <option value="Polish">Polish</option>
+          <option value="English">English</option>
         </select>
       </div>
       <div class="mb-3">

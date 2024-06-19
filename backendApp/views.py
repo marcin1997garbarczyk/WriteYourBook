@@ -16,7 +16,7 @@ walletService = WalletService()
 class create_story(APIView):
     def post(self, request, format=None):
         serializer = StoryFormSerializer(data=request.data)
-
+        print('19 hehe')
         isEnoughCoins = walletService.checkBalanceOnCurrentWallet(request.user.id)
         if(isEnoughCoins == False):
             return Response({'message': 'Not enough coins'}, status=status.HTTP_400_BAD_REQUEST, content_type='application/json')

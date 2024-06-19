@@ -7,7 +7,7 @@ from backendApp.models import Story, StoryMessage, UserWallet
 
 @admin.register(Story)
 class StoryAdmin(admin.ModelAdmin):
-    list_display = ['pk','ownerId','storyTitle', 'storyType', 'gender', 'characterName', 'inspiration', 'additionalPlotOutline', 'questionToChat']
+    list_display = ['pk','language','ownerId','storyTitle', 'storyType', 'gender', 'characterName', 'inspiration', 'additionalPlotOutline', 'questionToChat']
 
 @admin.register(StoryMessage)
 class StoryMessageAdmin(admin.ModelAdmin):

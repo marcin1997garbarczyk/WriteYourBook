@@ -2,7 +2,7 @@ let storyId = 0;
 
 async function cleanBackgroundImage() {
     const backgroundContainer = document.querySelector('.containerForBody');
-    backgroundContainer.style.backgroundImage = '';
+    backgroundContainer.style.backgroundImage = '/static/images/background_default.jpg';
     setTimeout(() => {
         backgroundContainer.classList.remove('fade-in');
     }, 1);
@@ -87,12 +87,14 @@ async function getMockForHttp() {
 
 async function callToApi() {
     let storySummary = {
+        language: $('#languageInput').val(),
         storyType: $('#storyTypeInput').val(),
         gender: $('#genderCharacterInput').val(),
         characterName: $('#nameOfCharacter').val(),
         inspiration: $('#inspirationForStory').val(),
         additionalPlotOutline: $('#additionalPlotOutline').val(),
     }
+    debugger;
 
     let apiCallResponse = await fetch("/api/submit_story_form", {
         method: "POST",
@@ -105,8 +107,10 @@ async function callToApi() {
         },
     })
 
+    debugger;
     let apiCallParsedResponse = await apiCallResponse.json();
 
+    debugger;
     let formElement = document.querySelector('.formClass');
     formElement.style.display = "none"
     let infoMessage = document.getElementById('infoAfterSave');
