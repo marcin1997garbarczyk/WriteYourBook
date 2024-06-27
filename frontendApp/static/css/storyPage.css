@@ -71,8 +71,9 @@ body {
     left: 0;
     background-size: cover;
     background-position: center;
-    opacity: 0;
+    opacity: 0.2;
     transition: opacity 2s ease-in-out;
+    background-image: url('/static/images/background_default.jpg')
 }
 
 
@@ -119,5 +120,6 @@ body {
 }
 .blindCard {
     margin-bottom: 20px;
-    opacity: 1; width:75vw; overflow: auto
+    opacity: 1;
+    overflow: auto;
 }

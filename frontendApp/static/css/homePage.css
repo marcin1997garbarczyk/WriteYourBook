@@ -121,7 +121,8 @@ body {
 }
 
 .blindCard {
-    opacity: 1; width:75vw; overflow: auto
+    opacity: 0.9;
+    overflow: auto;
 }
 .selectedButton {
     background-color: rgb(63 137 72) !important;

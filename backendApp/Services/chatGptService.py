@@ -1,10 +1,16 @@
 from openai import OpenAI
 import config
+import os
+from backendApp.models import StoryMessage
 
 
 class ChatGptService:
     def __init__(self):
-        API_KEY_OPEN_AI = config.CHAT_GPT_API_KEY
+        if(os.environ.get('CHAT_GPT_API_KEY') is not None):
+            API_KEY_OPEN_AI = os.environ.get('CHAT_GPT_API_KEY')
+        else:
+            API_KEY_OPEN_AI = config.CHAT_GPT_API_KEY
+
         self.client = OpenAI(
             api_key=API_KEY_OPEN_AI
         )
@@ -17,10 +23,6 @@ class ChatGptService:
         return responseFromChat
 
     def sendMessageToChatGpt(self):
-        # chat_completion = self.client.chat.completions.create(
-        #     messages=self.chatMessages,
-        #     model="gpt-3.5-turbo",
-        # )
         chat_completion = self.client.chat.completions.create(
             messages=self.chatMessages,
             model="gpt-4o",
@@ -29,9 +31,9 @@ class ChatGptService:
         responseFromChat = chat_completion.choices[0].message.content
         return responseFromChat
 
-    def injectStoryOfTalkWithRobot(self, storyMessageModel, someSortOfStoryId):
+    def injectStoryOfTalkWithRobot(self, someSortOfStoryId):
         print(someSortOfStoryId)
-        for storyMessage in storyMessageModel.objects.filter(storyId=someSortOfStoryId):
+        for storyMessage in StoryMessage.objects.filter(storyId=someSortOfStoryId):
             self.chatMessages.append({"role": storyMessage.role, "content": storyMessage.content})
 
 

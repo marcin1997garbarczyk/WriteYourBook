@@ -25,6 +25,9 @@ class StoryFormSerializer(serializers.ModelSerializer):
     def getTitle(self, obj):
         return obj.title
 
+    def getLanguage(self, obj):
+        return obj.language
+
     class Meta:
         model = Story
-        fields = ['storyTitle', 'storyType', 'gender', 'characterName', 'inspiration', 'additionalPlotOutline', 'questionToChat']
+        fields = ['storyTitle', 'language', 'storyType', 'gender', 'characterName', 'inspiration', 'additionalPlotOutline', 'questionToChat']

@@ -1,9 +1,8 @@
-
 let storyId = 0;
 
 async function cleanBackgroundImage() {
     const backgroundContainer = document.querySelector('.containerForBody');
-    backgroundContainer.style.backgroundImage = '';
+    backgroundContainer.style.backgroundImage = '/static/images/background_default.jpg';
     setTimeout(() => {
         backgroundContainer.classList.remove('fade-in');
     }, 1);
@@ -21,7 +20,7 @@ async function changeBackground(imageUrl) {
             backgroundContainer.classList.remove('fade-out');
             backgroundContainer.classList.add('fade-in');
         }, 10);
-    },1000);
+    }, 1000);
 }
 
 async function resetBackground() {
@@ -33,7 +32,7 @@ async function resetBackground() {
 }
 
 async function changeStoryType() {
-    let storyType =  $('#storyTypeInput').val();
+    let storyType = $('#storyTypeInput').val();
     let imageUrl = 'basic';
     imageUrl = `"/static/images/background_${storyType}.png"`;
 
@@ -41,25 +40,30 @@ async function changeStoryType() {
 }
 
 async function submitForm() {
-//    let spinnerElement = document.getElementById('loaderInForm')
-    let buttonElement = document.getElementById('buttonToSubmit')
-    buttonElement.style.display = 'none'
-//    spinnerElement.style.display = 'block'
+    let currentBalance = await getBalanceOfCurrentUser()
+    if (currentBalance > 0) {
+        let buttonElement = document.getElementById('buttonToSubmit')
+        buttonElement.style.display = 'none'
 
-    let formClass = document.querySelector('.formClass')
+        let formClass = document.querySelector('.formClass')
 
-    let historyClass = document.querySelector('.historyBody')
-    formClass.classList.add('fade-out');
-    setTimeout(()=> {
-        formClass.style.display = 'none';
-        historyClass.style.display = 'block';
-        showLoader();
-    },2000)
-    let htmlObject = await callToApi();
-    storyId = htmlObject.storyId;
-    hideLoader()
+        let historyClass = document.querySelector('.historyBody')
+        formClass.classList.add('fade-out');
+        setTimeout(() => {
+            formClass.style.display = 'none';
+            historyClass.style.display = 'block';
+            showLoader();
+        }, 2000)
+        let htmlObject = await callToApi();
+        storyId = htmlObject.storyId;
+        await getBalanceOfCurrentUser()
+        hideLoader()
+        window.location.href = `/story/${storyId}`
+    } else {
+        $('#myModal').modal('toggle');
+        $('#myModal').modal('show');
+    }
 
-    window.location.href=`/story/${storyId}`
 }
 
 function showLoader() {
@@ -73,7 +77,9 @@ function hideLoader() {
 }
 
 async function getMockForHttp() {
-    let objToReturn = {'storyId': 31}
+    let objToReturn = {
+        'storyId': 31
+    }
     await new Promise(r => setTimeout(r, 2000));
 
     return objToReturn;
@@ -81,31 +87,54 @@ async function getMockForHttp() {
 
 async function callToApi() {
     let storySummary = {
+        language: $('#languageInput').val(),
         storyType: $('#storyTypeInput').val(),
         gender: $('#genderCharacterInput').val(),
         characterName: $('#nameOfCharacter').val(),
         inspiration: $('#inspirationForStory').val(),
         additionalPlotOutline: $('#additionalPlotOutline').val(),
     }
+    debugger;
 
     let apiCallResponse = await fetch("/api/submit_story_form", {
-          method: "POST",
-          body: JSON.stringify(storySummary),
-            credentials: "same-origin",
-            headers: {
-              "X-CSRFToken": getCookie("csrftoken"),
-              "Accept": "application/json",
-              'Content-Type': 'application/json'
-            },
-        })
+        method: "POST",
+        body: JSON.stringify(storySummary),
+        credentials: "same-origin",
+        headers: {
+            "X-CSRFToken": getCookie("csrftoken"),
+            "Accept": "application/json",
+            'Content-Type': 'application/json'
+        },
+    })
 
+    debugger;
     let apiCallParsedResponse = await apiCallResponse.json();
 
+    debugger;
     let formElement = document.querySelector('.formClass');
-    formElement.style.display="none"
+    formElement.style.display = "none"
     let infoMessage = document.getElementById('infoAfterSave');
-    let objToReturn = {'storyId': apiCallParsedResponse.storyId}
+    let objToReturn = {
+        'storyId': apiCallParsedResponse.storyId
+    }
     return objToReturn;
+}
+
+
+async function getBalanceOfCurrentUser() {
+    let apiCallResponse = await fetch("/api/get_balance", {
+        method: "GET",
+        credentials: "same-origin",
+        headers: {
+            "X-CSRFToken": getCookie("csrftoken"),
+            "Accept": "application/json",
+            'Content-Type': 'application/json'
+        },
+    })
+
+    let apiCallParsedResponse = await apiCallResponse.json();
+    document.querySelector('#balance_value').textContent = apiCallParsedResponse.userWalletBalance;
+    return apiCallParsedResponse.userWalletBalance;
 }
 
 function getCookie(name) {
@@ -114,7 +143,6 @@ function getCookie(name) {
         var cookies = document.cookie.split(';');
         for (var i = 0; i < cookies.length; i++) {
             var cookie = jQuery.trim(cookies[i]);
-            // Does this cookie string begin with the name we want?
             if (cookie.substring(0, name.length + 1) === (name + '=')) {
                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                 break;
@@ -124,12 +152,12 @@ function getCookie(name) {
     return cookieValue;
 }
 
-//let alreadyInited = false;
-//if(!alreadyInited) {
-//    alreadyInited = init();
-//}
+async function init() {
+    await getBalanceOfCurrentUser();
+    return true
+}
 
-
-
-
-
+let alreadyInited = false;
+if (!alreadyInited) {
+    alreadyInited = init();
+}
