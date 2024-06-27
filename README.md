@@ -12,6 +12,28 @@
 - Coin validation system for continuing stories
 - Going back to existing stories and possibility to continue it
 
+## Demo
+Register page:
+![register.png](imageForReadme%2Fregister.png)
+
+Login page:
+![login.png](imageForReadme%2Flogin.png)
+
+Form for creation story:
+![form1.png](imageForReadme%2Fform1.png)
+
+Dynamic background change depend on story type:
+![form2.png](imageForReadme%2Fform2.png)
+
+Creating first story  based on previous form:
+![story1.png](imageForReadme%2Fstory1.png)
+
+Continue story with selecting answer:
+![story2.png](imageForReadme%2Fstory2.png)
+
+Go back to all stories and continue one of them:
+![myStories.png](imageForReadme%2FmyStories.png)
+
 ## Technologies
 
 - **Backend**: Python, Django
@@ -80,6 +102,7 @@ All suggestions and contributions are welcome! Please open issues and pull reque
 ## License
 
 This project is licensed under the MIT License. See the `LICENSE` file for details.
+
 
 ---
 
