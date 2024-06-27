@@ -50,7 +50,7 @@ function getGenderIcon(story) {
 function buildBootstrapCard(story) {
     console.log(story.gender)
 
-    return `<div class="card shadow p-3 mb-5 bg-white rounded" style="margin:10px; width:30%;" >
+    return `<div class="card shadow p-3 mb-5 bg-white rounded" style="margin:10px; width:35%;  min-width: 300px; " >
               <img class="bg_img"
                 src="/static/images/background_${story.storyType}.png"
                 alt=""
