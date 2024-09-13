@@ -28,7 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['writeyourbook.onrender.com','127.0.0.1', '*', 'writeyourbook-production.up.railway.app' ]
 
-CSRF_TRUSTED_ORIGINS = ['https://surfscrapper-production.up.railway.app', '*']
+CSRF_TRUSTED_ORIGINS = ['https://writeyourbook-production.up.railway.app', '*']
 
 # Application definition
 
