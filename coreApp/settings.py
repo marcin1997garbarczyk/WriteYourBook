@@ -25,8 +25,10 @@ SECRET_KEY = 'django-insecure-4u8n)@5x3eh%8yboqu!hqscjuv#k7(@#7^!5(8jay()ee02ziz
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['writeyourbook.onrender.com', '127.0.0.1']
 
+ALLOWED_HOSTS = ['writeyourbook.onrender.com','127.0.0.1', '*', 'writeyourbook-production.up.railway.app' ]
+
+CSRF_TRUSTED_ORIGINS = ['https://surfscrapper-production.up.railway.app', '*']
 
 # Application definition
 
