@@ -4,6 +4,8 @@
 
 **WriteYourBook** is a web application that allows users to create interactive stories in various genres such as fantasy, romance, children's stories, and crime tales. Users can make decisions at the end of each chapter, which shape the further development of the story. The application supports user registration and login, as well as a coin validation system that users can use to continue their stories.
 
+Demo: https://writeyourbook-production.up.railway.app/
+
 ## Features
 
 - Create interactive stories in various genres
